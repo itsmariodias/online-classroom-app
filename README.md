@@ -1,6 +1,6 @@
-# classroom
+# online_classroom
 
-A new Flutter project.
+Online Classroom App
 
 ## Getting Started
 
