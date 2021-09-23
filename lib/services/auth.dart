@@ -50,7 +50,7 @@ class AuthService {
       if (user == null) return null;
 
       // updating the user Display name
-      user.updateDisplayName(name);
+      await user.updateDisplayName(name);
       return _convertUser(user);
     } catch (e) {
       print(e.toString());
