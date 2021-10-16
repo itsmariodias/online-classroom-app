@@ -1,4 +1,4 @@
-import 'package:classroom/models/custom_user.dart';
+import 'package:classroom/data/custom_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -12,8 +12,7 @@ class AuthService {
     else {
       print("\t\t\t\tFirebase user");
       print(user);
-      return CustomUser(
-          uid: user.uid, name: user.displayName, email: user.email);
+      return CustomUser(uid: user.uid, email: user.email);
     }
   }
 
@@ -42,15 +41,15 @@ class AuthService {
   }
 
   // Register part with email and password
-  Future registerStudent(String email, String password, String name) async {
+  Future registerStudent(String email, String password) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
-      if (user == null) return null;
+      // if (user == null) return null;
 
       // updating the user Display name
-      await user.updateDisplayName(name);
+      // await user.updateDisplayName(name);
       return _convertUser(user);
     } catch (e) {
       print(e.toString());

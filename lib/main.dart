@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:classroom/models/custom_user.dart';
+import 'package:classroom/data/custom_user.dart';
 import 'package:classroom/screens/wrapper.dart';
 import 'package:classroom/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';

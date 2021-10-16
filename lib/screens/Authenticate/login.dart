@@ -30,8 +30,9 @@ class _LoginState extends State<Login> {
     return Scaffold(
         // appbar part
         appBar: AppBar(
-          title: Text("Login"),
-          backgroundColor: Colors.deepOrange[400],
+          title: Text("Student Login",
+              style: TextStyle(color: Colors.black)),
+          backgroundColor: Colors.white,
           actions: [
             TextButton.icon(
               onPressed: () {
@@ -39,7 +40,7 @@ class _LoginState extends State<Login> {
               },
               icon: Icon(Icons.person),
               label: Text('Register'),
-              style: TextButton.styleFrom(primary: Colors.white),
+              style: TextButton.styleFrom(primary: Colors.black),
             )
           ],
         ),
@@ -99,7 +100,7 @@ class _LoginState extends State<Login> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.deepOrange[400],
+                      primary: Colors.blue,
                     ),
                   ),
 
