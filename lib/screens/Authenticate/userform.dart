@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:classroom/data/custom_user.dart';
+import 'package:classroom/screens/loading.dart';
+import 'package:classroom/screens/wrapper.dart';
 import 'package:classroom/services/accounts_db.dart';
+import 'package:classroom/services/updatealldata.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,12 +24,17 @@ class _UserformState extends State<Userform> {
   // for form validation
   final _formKey = GlobalKey<FormState>();
 
+  // for loading screen
+  bool loading = false;
+
+
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<CustomUser?>(context);
     final AccountsDB pointer = AccountsDB(user: user!);
 
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
         appBar: AppBar(
           title: Text(
             "User Details",
@@ -87,17 +95,23 @@ class _UserformState extends State<Userform> {
 
                     SizedBox(height: 20.0),
 
+
                     // register button
                     ElevatedButton(
                       child: Text("Update"),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
+                          setState(() => loading = true);
+
                           // adding to db
-                          await pointer.updateAccounts(
-                              firstname, lastname, type);
+                          await pointer.updateAccounts(firstname, lastname, type);
+
+                          await updateAllData();
+
+                          setState(() => loading = false);
 
                           // popping to Wrapper to go to class
-                          Navigator.pop(context);
+                          Navigator.pushReplacement(context, MaterialPageRoute( builder: (context) => Wrapper()));
                         }
                       },
                       style: ElevatedButton.styleFrom(

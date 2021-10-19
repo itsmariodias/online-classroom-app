@@ -1,8 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables
 
+import 'package:classroom/screens/loading.dart';
+import 'package:classroom/screens/wrapper.dart';
 import 'package:classroom/services/auth.dart';
+import 'package:classroom/services/updatealldata.dart';
 import 'package:flutter/material.dart';
 import 'package:classroom/screens/Authenticate/userform.dart';
+
 
 class Register extends StatefulWidget {
   final Function toggle_reg_log;
@@ -21,14 +25,22 @@ class _RegisterState extends State<Register> {
   String email = '';
   String password = '';
   String error = '';
-  // String name = "";
+
+
 
   // for form validation
   final _formKey = GlobalKey<FormState>();
 
+  // for loading screen
+  bool loading = false;
+
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
+
+
         // appbar part
         appBar: AppBar(
           title: Text(
@@ -36,6 +48,8 @@ class _RegisterState extends State<Register> {
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.white,
+
+
           actions: [
             // login button on the top right corner of appbar
             TextButton.icon(
@@ -48,6 +62,8 @@ class _RegisterState extends State<Register> {
             )
           ],
         ),
+
+
 
         // body part
         body: Container(
@@ -63,18 +79,8 @@ class _RegisterState extends State<Register> {
                   children: [
                     SizedBox(height: 20.0),
 
-                    // textbox for name
-                    // TextFormField(
-                    //   decoration: InputDecoration(hintText: "Name"),
-                    //   validator: (val) => val!.isEmpty ? 'Enter an Name' : null,
-                    //   onChanged: (val) {
-                    //     setState(() {
-                    //       name = val;
-                    //     });
-                    //   },
-                    // ),
 
-                    // SizedBox(height: 20.0),
+
 
                     // textbox for email
                     TextFormField(
@@ -89,6 +95,8 @@ class _RegisterState extends State<Register> {
                     ),
 
                     SizedBox(height: 20.0),
+
+
 
                     // textbox for password
                     TextFormField(
@@ -106,24 +114,31 @@ class _RegisterState extends State<Register> {
 
                     SizedBox(height: 20.0),
 
+
+
+
                     // register button
                     ElevatedButton(
                       child: Text("Register"),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
+
+                          setState(() => loading = true);
+
                           // Registering new student
-                          var result =
-                              await _auth.registerStudent(email, password);
+                          var result = await _auth.registerStudent(email, password);
                           if (result == null) {
                             setState(() {
-                              error =
-                                  'Some error in Registering! Please check again';
+                              loading = false;
+                              error = 'Some error in Registering! Please check again';
                             });
-                          } else {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Userform()));
+                          }
+                          
+                          else {
+                            await updateAllData();
+  
+                            setState(() => loading = false);
+                            Navigator.pushReplacement(context, MaterialPageRoute( builder: (context) => Userform()));
                           }
                         }
                       },
@@ -133,6 +148,8 @@ class _RegisterState extends State<Register> {
                     ),
 
                     SizedBox(height: 12.0),
+
+
 
                     // Prints error if any while registering
                     Text(

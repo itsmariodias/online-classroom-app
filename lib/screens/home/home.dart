@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:classroom/data/accounts_data.dart';
 import 'package:classroom/data/custom_user.dart';
+import 'package:classroom/services/accounts_db.dart';
 import 'package:classroom/services/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,25 +21,68 @@ class ClassRoomState extends State<ClassRoom> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<CustomUser?>(context);
-
+    var account = getAccount(user!.uid);
+    
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Classroom"),
-        ),
-        body: Center(
-            child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () async {
-                await _auth.signOut();
-              },
-              child: Text("Logout"),
+            appBar: AppBar(
+              title: Text("Student"),
             ),
-            SizedBox(height: 12.0),
-            // Text("Name : ${user!.name}"),
-            Text("Email: ${user!.email}"),
-            Text("uid : ${user.uid}"),
-          ],
-        )));
+            body: Center(
+                child: Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    await _auth.signOut();
+                  },
+                  child: Text("Logout"),
+                ),
+                SizedBox(height: 12.0),
+                Text("First Name : ${account!.firstname}"),
+                Text("Last Name : ${account.lastname}"),
+                Text("Email: ${account.email}"),
+                Text("uid : ${account.uid}"),
+                Text("type : ${account.type}"),
+              ],
+            )));
+  }
+}
+
+
+class TeacherRoom extends StatefulWidget {
+  const TeacherRoom({ Key? key }) : super(key: key);
+
+  @override
+  _TeacherRoomState createState() => _TeacherRoomState();
+}
+
+class _TeacherRoomState extends State<TeacherRoom> {
+  final AuthService _auth = AuthService();
+
+  @override
+  Widget build(BuildContext context) {
+    final user = Provider.of<CustomUser?>(context);
+    var account = getAccount(user!.uid);
+    
+    return Scaffold(
+            appBar: AppBar(
+              title: Text("Teacher"),
+            ),
+            body: Center(
+                child: Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    await _auth.signOut();
+                  },
+                  child: Text("Logout"),
+                ),
+                SizedBox(height: 12.0),
+                Text("First Name : ${account!.firstname}"),
+                Text("Last Name : ${account.lastname}"),
+                Text("Email: ${account.email}"),
+                Text("uid : ${account.uid}"),
+                Text("type : ${account.type}"),
+              ],
+            )));
   }
 }

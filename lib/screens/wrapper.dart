@@ -1,10 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:classroom/data/accounts_data.dart';
 import 'package:classroom/data/custom_user.dart';
 import 'package:classroom/screens/Authenticate/authenticate.dart';
-import 'package:classroom/screens/Authenticate/userform.dart';
 import 'package:classroom/screens/home/home.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,20 +15,35 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
+
   @override
   Widget build(BuildContext context) {
+
+
     // getting user from the Stream Provider
     final user = Provider.of<CustomUser?>(context);
 
     // logic for if logged in
-    if (user != null) {
-      return ClassRoom();
-      // return Userform();
+
+    if (user != null && accountExists(user.uid)) {
+        var typeOfCurrentUser = getAccount(user.uid)!.type;
+        if (typeOfCurrentUser == 'student')
+        {
+          return ClassRoom();
+        }
+
+        else
+        {
+          return TeacherRoom();
+        }
+        
     }
+
 
     // user isnt logged in
     else {
       return Authenticate();
     }
+
   }
 }

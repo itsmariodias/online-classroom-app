@@ -3,6 +3,7 @@
 import 'package:classroom/data/custom_user.dart';
 import 'package:classroom/screens/wrapper.dart';
 import 'package:classroom/services/auth.dart';
+import 'package:classroom/services/updatealldata.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,8 @@ void main() async {
   // initializing firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  await updateAllData();
 
   // running home Widget
   return runApp(Home());
@@ -22,14 +25,19 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     // Stream provider for constantly getting the user data
     return StreamProvider<CustomUser?>.value(
 
-        // value is the stream method declared in "services.auth.dart"
-        value: AuthService().streamUser,
-        initialData: null,
+      // value is the stream method declared in "services.auth.dart"
+      value: AuthService().streamUser,
+      initialData: null,
 
-        // MaterialApp
-        child: MaterialApp(home: Wrapper()));
+
+      // MaterialApp
+      child: MaterialApp(home: Wrapper())
+    
+    
+    );
   }
 }

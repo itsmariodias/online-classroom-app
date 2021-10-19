@@ -1,17 +1,17 @@
 import 'package:classroom/data/custom_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+
   // Converts Firebase user to Custom User
   CustomUser? _convertUser(User? user) {
-    if (user == null)
+    if (user == null) {
       return null;
+    }
+    
     else {
-      print("\t\t\t\tFirebase user");
-      print(user);
       return CustomUser(uid: user.uid, email: user.email);
     }
   }
@@ -23,17 +23,6 @@ class AuthService {
     return _auth.authStateChanges().map((User? user) => _convertUser(user));
   }
 
-  // sign in part (anonymous)
-  Future signInAnon() async {
-    try {
-      UserCredential result = await _auth.signInAnonymously();
-      User? user = result.user;
-      return _convertUser(user);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
 
   // Sign out part
   Future signOut() async {
@@ -43,16 +32,13 @@ class AuthService {
   // Register part with email and password
   Future registerStudent(String email, String password) async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
-      // if (user == null) return null;
-
-      // updating the user Display name
-      // await user.updateDisplayName(name);
       return _convertUser(user);
-    } catch (e) {
-      print(e.toString());
+    }
+    
+    catch (e) {
+      print("Error in registering");
       return null;
     }
   }
@@ -60,12 +46,13 @@ class AuthService {
   // Login part with email and password
   Future loginStudent(String email, String password) async {
     try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
       return _convertUser(user);
-    } catch (e) {
-      print(e.toString());
+    }
+    
+    catch (e) {
+      print("Error in login");
       return null;
     }
   }
