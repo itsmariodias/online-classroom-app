@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:online_classroom/screens/home_page.dart';
+import 'package:online_classroom/screens/student_homepage.dart';
 
 // ignore_for_file: prefer_const_constructors
 

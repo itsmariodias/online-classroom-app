@@ -22,8 +22,10 @@ class _AttachmentComposerState extends State<AttachmentComposer> {
   @override
   Widget build(BuildContext context) {
 
-    return Expanded(
+    return Container(
         child: ListView.builder(
+            shrinkWrap: true,
+            primary: false,
             itemCount: widget.attachmentList.length,
             itemBuilder: (context, int index) {
               return InkWell(

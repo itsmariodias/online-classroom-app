@@ -2,7 +2,8 @@
 
 import 'package:online_classroom/models/custom_user.dart';
 import 'package:online_classroom/screens/Authenticate/authenticate.dart';
-import 'package:online_classroom/screens/home_page.dart';
+import 'package:online_classroom/screens/student_homepage.dart';
+import 'package:online_classroom/screens/teacher_homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,10 +21,12 @@ class _WrapperState extends State<Wrapper> {
     final user = Provider.of<CustomUser?>(context);
 
     // logic for if logged in
-    if (user != null) {
-      return HomePage();
+    if (user != null && user.name != "Monali") {
+      return StudentHomePage();
     }
-
+    else if(user != null) {
+      return TeacherHomePage();
+    }
     // user isnt logged in
     else {
       return Authenticate();
