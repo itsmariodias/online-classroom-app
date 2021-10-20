@@ -35,7 +35,11 @@ class Home extends StatelessWidget {
 
 
       // MaterialApp
-      child: MaterialApp(home: Wrapper())
+      
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Wrapper()
+      )
     
     
     );

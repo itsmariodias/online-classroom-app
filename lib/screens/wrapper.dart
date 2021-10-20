@@ -24,7 +24,6 @@ class _WrapperState extends State<Wrapper> {
     final user = Provider.of<CustomUser?>(context);
 
     // logic for if logged in
-
     if (user != null && accountExists(user.uid)) {
         var typeOfCurrentUser = getAccount(user.uid)!.type;
         if (typeOfCurrentUser == 'student')

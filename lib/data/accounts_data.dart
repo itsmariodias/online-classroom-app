@@ -2,14 +2,14 @@
 
 import 'package:classroom/services/accounts_db.dart';
 
-class AccountsData {
+class Accounts {
   String? uid;
   String? firstname;
   String? lastname;
   String? email;
   String? type;
 
-  AccountsData({this.uid, this.firstname, this.lastname, this.email, this.type});
+  Accounts({this.uid, this.firstname, this.lastname, this.email, this.type});
 }
 
 List accountList = [];
@@ -24,7 +24,7 @@ Future<bool> getListAccount() async {
     
     var data = element.data();
     
-    accountList.add(AccountsData(
+    accountList.add(Accounts(
       uid: data["uid"],
       firstname: data["firstname"],
       lastname: data["lastname"],
@@ -33,40 +33,20 @@ Future<bool> getListAccount() async {
     ));
   });
 
-  print("\t\t\t\tGot list");
-  print(accountList);
-
+  print("\t\t\t\tGot Account list");
   return true;
   
 }
 
-// returns true if teacher else false
-AccountsData? getAccount(uid)
-{
-
-
-  var data = accountList.firstWhere((element) => element.uid == uid, orElse: () => null);
-
-  if (data != null)
-  {
-    return data;
-  }
-  
-  else
-  {
-    return null;
-  }
-}
-
-
 // returns whether the account exists
 bool accountExists(uid) {
   var data = accountList.firstWhere((element) => element.uid == uid, orElse: () => null);
+  return data!= null? true:false;
+}
 
-  if (data!= null )
-  {
-    return true;
-  }
-  
-  return false;
+
+// returns the account of the user
+Accounts? getAccount(uid) {
+  var data = accountList.firstWhere((element) => element.uid == uid, orElse: () => null);
+  return data!= null? data : null;
 }

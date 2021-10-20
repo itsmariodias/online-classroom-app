@@ -1,6 +1,4 @@
-import 'dart:math';
 
-import 'package:classroom/data/accounts_data.dart';
 import 'package:classroom/data/custom_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -49,10 +47,10 @@ class AccountsDB {
   }
 
   // // make list of accounts from snapshots
-  // List<AccountsData> createAccountDataList(QuerySnapshot snapshot)
+  // List<Accounts> createAccountDataList(QuerySnapshot snapshot)
   // {
   //   return snapshot.docs.map((doc) {
-  //     return AccountsData(
+  //     return Accounts(
   //       email: doc.get('email'),
   //       firstname: doc.get('firstname'),
   //       lastname: doc.get('lastname'),
@@ -62,7 +60,7 @@ class AccountsDB {
   // }
 
   // // stream that listens to changes in the db and sends snapshots
-  // Stream<List<AccountsData>> get getAccounts{
+  // Stream<List<Accounts>> get getAccounts{
   //   return accountReference.snapshots().map(createAccountDataList);
   // }
 

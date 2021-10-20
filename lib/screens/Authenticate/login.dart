@@ -105,7 +105,8 @@ class _LoginState extends State<Login> {
 
                         setState(() => loading = true);
 
-
+                        await updateAllData();
+                        
                         // Logging into the account
                         var result = await _auth.loginStudent(email, password);
 
@@ -119,7 +120,8 @@ class _LoginState extends State<Login> {
                         }
                         else {
                           print("\t\t\tUser Logged in Successfully");
-                          await updateAllData();
+                          
+                          setState(() => loading = false);
                         }
                       }
                     },
