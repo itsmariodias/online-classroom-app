@@ -46,22 +46,4 @@ class AccountsDB {
     return listOfAccount;
   }
 
-  // // make list of accounts from snapshots
-  // List<Accounts> createAccountDataList(QuerySnapshot snapshot)
-  // {
-  //   return snapshot.docs.map((doc) {
-  //     return Accounts(
-  //       email: doc.get('email'),
-  //       firstname: doc.get('firstname'),
-  //       lastname: doc.get('lastname'),
-  //       type: doc.get('type')
-  //       );
-  //   }).toList();
-  // }
-
-  // // stream that listens to changes in the db and sends snapshots
-  // Stream<List<Accounts>> get getAccounts{
-  //   return accountReference.snapshots().map(createAccountDataList);
-  // }
-
 }

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class ClassRooms {
   String className;
   String description;
-  Accounts creator;
+  Account creator;
   Color uiColor;
   List students;
 
@@ -29,8 +29,8 @@ class ClassStudent{
 }
 
 
-List<ClassRooms> classRoomList = [];
-List<ClassStudent> studentsList = [];
+List classRoomList = [];
+List studentsList = [];
 
 
 
@@ -38,7 +38,6 @@ List<ClassStudent> studentsList = [];
 Future<bool> getListClasses() async {
   classRoomList = [];
 
-  // TODO
   List? jsonList = await ClassesDB().createClassesDataList();
   if (jsonList == null) {
     return false;
@@ -59,11 +58,9 @@ Future<bool> getListClasses() async {
   });
 
   print("\t\t\t\tGot Classes list");
-  print(classRoomList[0].students[1].uid);
   return true;
   
 }
-
 
 // updates the StudentsList with DB values
 Future<bool> getStudentAndClasses() async {
@@ -98,6 +95,10 @@ List makeStudentsAccountList(var cname) {
 
 }
 
+ClassRooms? getClassroom(cname) {
+  var data = classRoomList.firstWhere((element) => element.className == cname, orElse: () => null);
+  return data;
+}
 
 
 
@@ -106,5 +107,5 @@ List makeStudentsAccountList(var cname) {
 //       description: "BE Computers",
 //       creator: accountList[3],
 //       uiColor: Colors.red,
-//       students: <Accounts>[accountList[0], accountList[1], accountList[2]]
+//       students: <Account>[accountList[0], accountList[1], accountList[2]]
 //   )

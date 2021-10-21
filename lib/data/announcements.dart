@@ -1,0 +1,78 @@
+
+
+import 'package:classroom/data/accounts_data.dart';
+import 'package:classroom/data/attachments.dart';
+import 'package:classroom/data/classrooms.dart';
+import 'package:classroom/services/announcements_db.dart';
+
+class Announcement {
+  Account user;
+  String dateTime;
+  String title;
+  String type;
+  String description;
+  ClassRooms classroom;
+  bool active = true;
+  List attachments;
+
+  Announcement({required this.user, required this.dateTime, required this.type, required this.title, required this.description, required this.classroom, required this.attachments});
+}
+
+
+List announcementList = [];
+List notificationList = List.from(announcementList);
+
+
+// updates the announcementList with DB values
+Future<bool> getAnnouncementList() async {
+  announcementList = [];
+
+  List? jsonList = await AnnouncementDB().createAnnouncementListDB();
+  if (jsonList == null) return false;
+
+  jsonList.forEach((element) {
+    
+    var data = element.data();
+    announcementList.add(
+      Announcement(
+        title: data["title"],
+        dateTime: data["dateTime"],
+        type: data["type"],
+        description: data["description"],
+        
+        attachments: getAttachmentListForAnnouncement(data["title"]),
+        user: getAccount(data["uid"])!,
+        classroom: getClassroom(data["className"])!,
+        
+      )
+    );
+  });
+
+  print("\t\t\t\tGot Announcements list");
+  // print(announcementList);
+  return true;
+  
+}
+
+
+Announcement? getAnnouncement(name) {
+  var data = announcementList.firstWhere((element) => element.classroom.className+"__"+element.title == name, orElse: () => null);
+  return data;
+}
+
+
+
+// List<Announcement> announcementList = [
+//   Announcement(
+//       user: classRoomList[0].creator,
+//       dateTime: "Aug 28, 9:00 PM",
+//       type: "Notice",
+//       title: "Please submit Assignment 2",
+//       description: "",
+//       classroom: classRoomList[0],
+//       attachments: []
+//   ),
+// ......................................
+// ];
+
+// List<Announcement> notificationList = List.from(announcementList);

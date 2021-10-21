@@ -1,10 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:classroom/data/accounts_data.dart';
+import 'package:classroom/data/attachments.dart';
+import 'package:classroom/data/classrooms.dart';
 import 'package:classroom/data/custom_user.dart';
 import 'package:classroom/services/accounts_db.dart';
+import 'package:classroom/services/announcements_db.dart';
+import 'package:classroom/services/attachments_db.dart';
 import 'package:classroom/services/auth.dart';
 import 'package:classroom/services/classes_db.dart';
+import 'package:classroom/services/submissions_db.dart';
 import 'package:classroom/services/updatealldata.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -49,18 +54,22 @@ class ClassRoomState extends State<ClassRoom> {
                 Text("uid : ${account.uid}"),
                 Text("type : ${account.type}"),
 
-                // form
-                  TextFormField(
-                      decoration: InputDecoration(hintText: "className"),
-                      onChanged: (val) { className = val; }
-                    ),
+                // // form
+                //   TextFormField(
+                //       decoration: InputDecoration(hintText: "className"),
+                //       onChanged: (val) { className = val; }
+                //     ),
 
 
                     ElevatedButton(
-                      child: Text("Add Class"),
+                      child: Text("Button"),
                       onPressed: () async {
                         
-                        await ClassesDB(user: user).updateStudentClasses(className);
+                        // await AttachmentsDB().createAttachmentsDB("America","www.america.com","jpg");
+                        // await AttachmentsDB().createAttachAnnounceDB("Announce1","www.america.com");
+                        // await AnnouncementDB(user: user).addAnnouncements("Announce2","Notice","Two","class one");
+                        // await SubmissionDB().addSubmissions(user.uid, "class one", "class one__Announce1");
+                        // await AttachmentsDB().createAttachmentStudentsDB(user.uid,"www.google.com","class one__Announce1");
                         await updateAllData();
                       },
 
@@ -115,22 +124,22 @@ class _TeacherRoomState extends State<TeacherRoom> {
                   Text("type : ${account.type}"),
             
             
-                  // form
-                  TextFormField(
-                      decoration: InputDecoration(hintText: "className"),
-                      onChanged: (val) { className = val; }
-                    ),
+                  // // form
+                  // TextFormField(
+                  //     decoration: InputDecoration(hintText: "className"),
+                  //     onChanged: (val) { className = val; }
+                  //   ),
 
-                    TextFormField(
-                      decoration: InputDecoration(hintText: "description"),
-                      onChanged: (val) { description = val; }
-                    ),
+                  //   TextFormField(
+                  //     decoration: InputDecoration(hintText: "description"),
+                  //     onChanged: (val) { description = val; }
+                  //   ),
 
                     ElevatedButton(
-                      child: Text("Add Class"),
+                      child: Text("Button"),
                       onPressed: () async {
                         
-                        await ClassesDB(user: user).updateClasses(className, description);
+                        // await AttachmentsDB().createAttachmentsDB("Attach2","www.india.com","ppt");
                         await updateAllData();
                       },
 

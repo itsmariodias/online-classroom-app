@@ -2,14 +2,14 @@
 
 import 'package:classroom/services/accounts_db.dart';
 
-class Accounts {
+class Account {
   String? uid;
   String? firstname;
   String? lastname;
   String? email;
   String? type;
 
-  Accounts({this.uid, this.firstname, this.lastname, this.email, this.type});
+  Account({this.uid, this.firstname, this.lastname, this.email, this.type});
 }
 
 List accountList = [];
@@ -24,7 +24,7 @@ Future<bool> getListAccount() async {
     
     var data = element.data();
     
-    accountList.add(Accounts(
+    accountList.add(Account(
       uid: data["uid"],
       firstname: data["firstname"],
       lastname: data["lastname"],
@@ -46,7 +46,7 @@ bool accountExists(uid) {
 
 
 // returns the account of the user
-Accounts? getAccount(uid) {
+Account? getAccount(uid) {
   var data = accountList.firstWhere((element) => element.uid == uid, orElse: () => null);
-  return data!= null? data : null;
+  return data;
 }
