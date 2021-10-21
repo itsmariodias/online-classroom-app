@@ -33,6 +33,8 @@ dependencies:
   firebase_core: ^1.6.0
   firebase_auth: ^3.1.1
   provider: ^6.0.0
+  intl: ^0.17.0
+  datetime_picker_formfield: ^2.0.0
 
 dev_dependencies:
   flutter_test:
