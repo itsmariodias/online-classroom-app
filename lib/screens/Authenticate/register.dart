@@ -63,7 +63,7 @@ class _RegisterState extends State<Register> {
 
                     // textbox for name
                     TextFormField(
-                      decoration: InputDecoration(hintText: "Name"),
+                      decoration: InputDecoration(labelText: "Name", border: OutlineInputBorder()),
                       validator: (val) => val!.isEmpty ? 'Enter an Name' : null,
                       onChanged: (val) {
                         setState(() {
@@ -76,7 +76,7 @@ class _RegisterState extends State<Register> {
 
                     // textbox for email
                     TextFormField(
-                      decoration: InputDecoration(hintText: "Email"),
+                      decoration: InputDecoration(labelText: "Email", border: OutlineInputBorder()),
                       validator: (val) => val!.isEmpty ? 'Enter an email' : null,
                       onChanged: (val) {
                         setState(() {
@@ -89,7 +89,7 @@ class _RegisterState extends State<Register> {
 
                     // textbox for password
                     TextFormField(
-                      decoration: InputDecoration(hintText: "Password"),
+                      decoration: InputDecoration(labelText: "Password", border: OutlineInputBorder()),
                       obscureText: true,
                       validator: (val) => val!.length < 6
                           ? 'Enter a password 6+ chars long'
@@ -105,7 +105,11 @@ class _RegisterState extends State<Register> {
 
                     // register button
                     ElevatedButton(
-                      child: Text("Register"),
+                      child: Text("Register",
+                          style: TextStyle(
+                              color: Colors.white, fontFamily: "Roboto",
+                              fontSize: 22)
+                      ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           // Registering new student
@@ -122,6 +126,7 @@ class _RegisterState extends State<Register> {
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.blue,
+                        minimumSize: Size(150, 50),
                       ),
                     ),
 

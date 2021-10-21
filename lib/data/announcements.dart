@@ -5,6 +5,7 @@ import 'package:online_classroom/data/attachments.dart';
 class Announcement {
   Account user;
   String dateTime;
+  String dueDate;
   String title;
   String type;
   String description;
@@ -12,7 +13,7 @@ class Announcement {
   bool active = true;
   List<Attachment> attachments;
 
-  Announcement({required this.user, required this.dateTime, required this.type, required this.title, required this.description, required this.classroom, required this.attachments});
+  Announcement({required this.user, required this.dateTime, this.dueDate = "", required this.type, required this.title, required this.description, required this.classroom, required this.attachments});
 }
 
 
@@ -64,7 +65,8 @@ List<Announcement> announcementList = [
   ),
   Announcement(
       user: classRoomList[1].creator,
-      dateTime: "Aug 11, 9:00 PM",
+      dateTime: "Aug 10, 9:00 PM",
+      dueDate: "Aug 11, 9:00 PM",
       type: "Notice",
       title: "UT 1 Question Bank",
       description: "",
@@ -94,6 +96,7 @@ List<Announcement> announcementList = [
       title: "Assignment 1",
       type: "Assignment",
       dateTime: "Aug 25, 9:00 PM",
+      dueDate: "Aug 26, 9:00 PM",
       description: "",
       classroom: classRoomList[0],
       attachments: [sampleAttachment]
@@ -103,6 +106,7 @@ List<Announcement> announcementList = [
       title: "Practical 3",
       type: "Assignment",
       dateTime: "Aug 31, 9:30 PM",
+      dueDate: "Sep 1, 9:00 PM",
       description: "Submit along with rubric sheet",
       classroom: classRoomList[1],
       attachments: [sampleAttachment]
@@ -112,6 +116,7 @@ List<Announcement> announcementList = [
       title: "Assignment 3",
       type: "Assignment",
       dateTime: "Aug 19, 9:30 PM",
+      dueDate: "Aug 20, 9:00 PM",
       description: "",
       classroom: classRoomList[3],
       attachments: [sampleAttachment]
@@ -121,6 +126,7 @@ List<Announcement> announcementList = [
       title: "Practical 2",
       type: "Assignment",
       dateTime: "Aug 25, 9:00 PM",
+      dueDate: "Aug 26, 9:00 PM",
       description: "",
       classroom: classRoomList[3],
       attachments: [sampleAttachment]
@@ -130,6 +136,7 @@ List<Announcement> announcementList = [
       title: "Practical 1",
       type: "Assignment",
       dateTime: "Aug 31, 9:30 PM",
+      dueDate: "Sep 1, 9:00 PM",
       description: "",
       classroom: classRoomList[2],
       attachments: [sampleAttachment]
@@ -139,6 +146,7 @@ List<Announcement> announcementList = [
       title: "Mini Project Submission",
       type: "Assignment",
       dateTime: "Aug 19, 9:30 PM",
+      dueDate: "Aug 26, 9:00 PM",
       description: "",
       classroom: classRoomList[0],
       attachments: [sampleAttachment]

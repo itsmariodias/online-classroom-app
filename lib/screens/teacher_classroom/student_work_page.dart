@@ -23,22 +23,31 @@ class _StudentWorkPageState extends State<StudentWorkPage> {
     List<Submission> submittedWork = submissionList.where((i) => i.user == widget.student && i.classroom == widget.classRoom && i.submitted).toList();
 
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: widget.classRoom.uiColor,
+          elevation: 0.5,
+          title: Text(
+            "Student Classwork",
+            style: TextStyle(
+                color: Colors.white, fontFamily: "Roboto", fontSize: 22),
+          ),
+          leading: Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.more_vert,
+                color: Colors.white,
+                size: 26,
+              ),
+              onPressed: () {},
+            )
+          ],
+        ),
         body: ListView(
             children: [
-              Container(
-                padding: EdgeInsets.only(top: 30, left: 15, bottom: 10),
-                child: Text(
-                  "Student Classwork",
-                  style: TextStyle(
-                      fontSize: 30, color: widget.classRoom.uiColor, letterSpacing: 1),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 15),
-                width: MediaQuery.of(context).size.width - 30,
-                height: 2,
-                color: widget.classRoom.uiColor,
-              ),
               Profile(
                 user: widget.student,
               ),

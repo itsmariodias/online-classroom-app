@@ -48,10 +48,6 @@ class _ClassRoomPageState extends State<ClassRoomPage> {
           style: TextStyle(
               color: Colors.white, fontFamily: "Roboto", fontSize: 22),
         ),
-        leading: Icon(
-          Icons.menu,
-          color: Colors.white,
-        ),
         actions: [
           IconButton(
             icon: Icon(

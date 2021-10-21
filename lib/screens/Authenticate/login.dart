@@ -30,7 +30,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
         // appbar part
         appBar: AppBar(
-          title: Text("Student Login",
+          title: Text("Login",
               style: TextStyle(color: Colors.black)),
           backgroundColor: Colors.white,
           actions: [
@@ -56,7 +56,7 @@ class _LoginState extends State<Login> {
 
                   // textbox for email
                   TextFormField(
-                    decoration: InputDecoration(hintText: "Email"),
+                    decoration: InputDecoration(labelText: "Email", border: OutlineInputBorder()),
                     validator: (val) => val!.isEmpty ? 'Enter an email' : null,
                     onChanged: (val) {
                       setState(() {
@@ -69,7 +69,7 @@ class _LoginState extends State<Login> {
 
                   // textbox for password
                   TextFormField(
-                    decoration: InputDecoration(hintText: "Password"),
+                    decoration: InputDecoration(labelText: "Password", border: OutlineInputBorder()),
                     obscureText: true,
                     validator: (val) => val!.length < 6
                         ? 'Enter a password 6+ chars long'
@@ -85,7 +85,11 @@ class _LoginState extends State<Login> {
 
                   // Login  button
                   ElevatedButton(
-                    child: Text("Login"),
+                    child: Text("Login",
+                        style: TextStyle(
+                            color: Colors.white, fontFamily: "Roboto",
+                            fontSize: 22)
+                    ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         // Logging into the account
@@ -101,6 +105,7 @@ class _LoginState extends State<Login> {
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.blue,
+                      minimumSize: Size(150, 50),
                     ),
                   ),
 

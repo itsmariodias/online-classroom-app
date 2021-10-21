@@ -4,6 +4,7 @@ import 'package:online_classroom/widgets/profile_tile.dart';
 import 'package:online_classroom/data/submissions.dart';
 import 'package:online_classroom/widgets/attachment_composer.dart';
 import 'package:online_classroom/screens/teacher_classroom/submission_page.dart';
+import 'package:online_classroom/screens/teacher_classroom/announcement_crud/edit_announcement.dart';
 
 class AnnouncementPage extends StatefulWidget {
   Announcement announcement;
@@ -21,7 +22,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
       List<Submission> submissionsAssigned = submissionList.where((i) => i.assignment == widget.announcement && !i.submitted).toList();
       List<Submission> submissionsDone = submissionList.where((i) => i.assignment == widget.announcement && i.submitted).toList();
       return [
-        Container(
+        if(submissionsDone.length > 0) Container(
           padding: EdgeInsets.only(top: 15, left: 15, bottom: 10),
           child: Text(
             "Submitted",
@@ -31,7 +32,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                 letterSpacing: 1),
           ),
         ),
-        Container(
+        if(submissionsDone.length > 0) Container(
           margin: EdgeInsets.only(left: 15),
           width: MediaQuery
               .of(context)
@@ -56,7 +57,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                       ));
                 })
         ),
-        Container(
+        if(submissionsAssigned.length > 0) Container(
           padding: EdgeInsets.only(top: 15, left: 15, bottom: 10),
           child: Text(
             "Pending",
@@ -66,7 +67,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                 letterSpacing: 1),
           ),
         ),
-        Container(
+        if(submissionsAssigned.length > 0) Container(
           margin: EdgeInsets.only(left: 15),
           width: MediaQuery
               .of(context)
@@ -94,6 +95,59 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
   @override
   Widget build(BuildContext context) {
 
+    Future<void> deleteAnnouncement() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Delete '+ widget.announcement.type),
+            content: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Text('This cannot be undone. Continue?'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Delete', style: TextStyle(color: Colors.red)),
+                onPressed: () {
+                  print('Deleted');
+
+                  announcementList.remove(widget.announcement);
+                  notificationList.remove(widget.announcement);
+
+                  if(widget.announcement.type == 'Assignment') {
+                    List<Submission> deletedSubmissions = [];
+                    for (int index = 0; index <
+                        submissionList.length; index++) {
+                      if (submissionList[index].assignment ==
+                              widget.announcement) {
+                        deletedSubmissions.add(submissionList[index]);
+                      }
+                    }
+                    for (int index = 0; index < deletedSubmissions.length; index++) {
+                      submissionList.remove(deletedSubmissions[index]);
+                    }
+                  }
+
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
       body: ListView(
           //crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,6 +158,14 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                 widget.announcement.title,
                 style: TextStyle(
                     fontSize: 25, color: widget.announcement.classroom.uiColor, letterSpacing: 1),
+              ),
+            ),
+            if(widget.announcement.type == 'Assignment') Container(
+              padding: EdgeInsets.only(left: 15, bottom: 10),
+              child: Text(
+                "Due " + widget.announcement.dueDate,
+                style: TextStyle(
+                    fontSize: 15, fontWeight: FontWeight.bold, letterSpacing: 1),
               ),
             ),
             Container(
@@ -137,7 +199,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                                     style: TextStyle(),
                                   ),
                                   Text(
-                                    widget.announcement.dateTime,
+                                    "Last updated " + widget.announcement.dateTime,
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ]),
@@ -168,6 +230,39 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
             ) : Container(),
             AttachmentComposer(widget.announcement.attachments),
           ] + buildSubmissions()
+      ),
+      floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => EditAnnouncement(announcement: widget.announcement),
+                    )).then((_) => setState(() {}));
+              },
+              backgroundColor: widget.announcement.classroom.uiColor,
+              child: Icon(
+                Icons.edit,
+                color: Colors.white,
+                size: 32,
+              ),
+              heroTag: null,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            FloatingActionButton(
+              onPressed: () => deleteAnnouncement(),
+              backgroundColor: widget.announcement.classroom.uiColor,
+              child: Icon(
+                Icons.delete,
+                color: Colors.white,
+                size: 32,
+              ),
+              heroTag: null,
+            )
+          ]
       )
     );
   }

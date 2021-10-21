@@ -14,11 +14,6 @@ class StreamTab extends StatefulWidget {
 class _StreamTabState extends State<StreamTab> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 10),
-        CommentComposer(widget.className),
-      ],
-    );
+    return CommentComposer(widget.className);
   }
 }

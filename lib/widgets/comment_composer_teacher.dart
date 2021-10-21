@@ -24,10 +24,13 @@ class _CommentComposerState extends State<CommentComposer> {
             itemCount: _announcementList.length,
             itemBuilder: (context, int index) {
               return InkWell(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => AnnouncementPage(
-                          announcement:  _announcementList[index]
-                      ))),
+                  onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => AnnouncementPage(
+                            announcement:  _announcementList[index]
+                        ),
+                      )).then((_) => setState(() {})),
+
                   child: Container(
                       margin: EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),

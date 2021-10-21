@@ -52,7 +52,7 @@ class _TimelineTabState extends State<TimelineTab> {
                       Padding(
                         padding: EdgeInsets.only(top: 5),
                         child: Text(
-                          "Due " + classWorkList[index].dateTime,
+                          "Due " + classWorkList[index].dueDate,
                           style: TextStyle(color: Colors.grey),
                         ),
                       ),

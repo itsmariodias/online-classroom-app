@@ -50,7 +50,7 @@ class _ClassWorkState extends State<ClassWork> {
                             style: TextStyle(letterSpacing: 1),
                           ),
                           Text(
-                            "Due " + _classWorkList[index].dateTime,
+                            "Due " + _classWorkList[index].dueDate,
                             style: TextStyle(color: Colors.grey),
                           ),
                         ],

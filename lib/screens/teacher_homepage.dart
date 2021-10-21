@@ -20,7 +20,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
       appBar: AppBar(
         elevation: 0.5,
         title: Text(
-          "Your Classes",
+          "My Classes",
           style: TextStyle(
               color: Colors.black, fontFamily: "Roboto", fontSize: 22),
         ),

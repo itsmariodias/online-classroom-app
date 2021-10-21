@@ -28,6 +28,14 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                     fontSize: 25, color: widget.announcement.classroom.uiColor, letterSpacing: 1),
               ),
             ),
+            if(widget.announcement.type == 'Assignment') Container(
+              padding: EdgeInsets.only(left: 15, bottom: 10),
+              child: Text(
+                "Due " + widget.announcement.dueDate,
+                style: TextStyle(
+                    fontSize: 15, fontWeight: FontWeight.bold, letterSpacing: 1),
+              ),
+            ),
             Container(
               margin: EdgeInsets.only(left: 15),
               width: MediaQuery.of(context).size.width - 30,
@@ -59,7 +67,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                                     style: TextStyle(),
                                   ),
                                   Text(
-                                    widget.announcement.dateTime,
+                                    "Last updated " + widget.announcement.dateTime,
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ]),
