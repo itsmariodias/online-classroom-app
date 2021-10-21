@@ -26,23 +26,12 @@ class _WrapperState extends State<Wrapper> {
     // logic for if logged in
     if (user != null && accountExists(user.uid)) {
         var typeOfCurrentUser = getAccount(user.uid)!.type;
-        if (typeOfCurrentUser == 'student')
-        {
-          return ClassRoom();
-        }
-
-        else
-        {
-          return TeacherRoom();
-        }
-        
+        return typeOfCurrentUser == 'student'? ClassRoom() : TeacherRoom();
     }
 
 
     // user isnt logged in
-    else {
-      return Authenticate();
-    }
+    else return Authenticate();
 
   }
 }
