@@ -8,7 +8,7 @@ class TimelineTab extends StatefulWidget {
 }
 
 class _TimelineTabState extends State<TimelineTab> {
-  List<Announcement> classWorkList = announcementList.where((i) => i.type == "Assignment").toList();
+  List classWorkList = announcementList.where((i) => i.type == "Assignment").toList();
 
   @override
   Widget build(BuildContext context) {

@@ -63,7 +63,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    widget.announcement.user.firstName + " " + widget.announcement.user.lastName,
+                                    widget.announcement.user.firstName! + " " + widget.announcement.user.lastName!,
                                     style: TextStyle(),
                                   ),
                                   Text(

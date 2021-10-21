@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:online_classroom/data/accounts.dart';
+import 'package:online_classroom/screens/student_classroom/add_class.dart';
 import 'package:online_classroom/screens/student_classroom/wall_tab.dart';
 import 'package:online_classroom/screens/student_classroom/classes_tab.dart';
 import 'package:online_classroom/screens/student_classroom/timeline_tab.dart';
 import 'package:online_classroom/services/auth.dart';
-import 'package:online_classroom/models/custom_user.dart';
+import 'package:online_classroom/data/custom_user.dart';
+import 'package:online_classroom/services/classes_db.dart';
+import 'package:online_classroom/services/updatealldata.dart';
 import 'package:provider/provider.dart';
 
 class StudentHomePage extends StatefulWidget {
@@ -24,6 +28,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
     final user = Provider.of<CustomUser?>(context);
+    var account = getAccount(user!.uid);
 
     final tabs = [
       WallTab(),
@@ -42,11 +47,11 @@ class _StudentHomePageState extends State<StudentHomePage> {
           backgroundColor: Colors.white,
           actions: [
             Padding(
-              padding: const EdgeInsets.only(top:10, bottom: 10),
-              child: CircleAvatar(
-                backgroundImage:
-                AssetImage("Assets/Images/Dp/default.png"),
-              )),
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Text("Welcome, " + (account!.firstName as String),
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+            ),
             IconButton(
               icon: Icon(
                 Icons.logout,
@@ -79,6 +84,20 @@ class _StudentHomePageState extends State<StudentHomePage> {
           selectedItemColor: Colors.black,
           onTap: _onItemTapped,
         ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => AddClass(),
+              )).then((_) => setState(() {}));
+        },
+        backgroundColor: Colors.blue,
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 32,
+        ),
+      ),
     );
   }
 }

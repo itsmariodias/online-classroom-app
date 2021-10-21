@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:online_classroom/data/accounts.dart';
+import 'package:online_classroom/screens/teacher_classroom/add_class.dart';
 import 'package:online_classroom/screens/teacher_classroom/classes_tab.dart';
 import 'package:online_classroom/services/auth.dart';
-import 'package:online_classroom/models/custom_user.dart';
+import 'package:online_classroom/data/custom_user.dart';
 import 'package:provider/provider.dart';
 
 class TeacherHomePage extends StatefulWidget {
@@ -15,6 +17,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
     final user = Provider.of<CustomUser?>(context);
+    var account = getAccount(user!.uid);
 
     return Scaffold(
       appBar: AppBar(
@@ -27,11 +30,11 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
         backgroundColor: Colors.white,
         actions: [
           Padding(
-              padding: const EdgeInsets.only(top:10, bottom: 10),
-              child: CircleAvatar(
-                backgroundImage:
-                AssetImage("Assets/Images/Dp/default.png"),
-              )),
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Text("Welcome, " + (account!.firstName as String),
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+          ),
           IconButton(
             icon: Icon(
               Icons.logout,
@@ -44,7 +47,21 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
           ),
         ],
       ),
-      body: ClassesTab(user!.name)
+      body: ClassesTab(account),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => AddClass(),
+              )).then((_) => setState(() {}));
+        },
+        backgroundColor: Colors.blue,
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 32,
+        ),
+      ),
     );
   }
 }

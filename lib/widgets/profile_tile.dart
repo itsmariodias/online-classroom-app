@@ -20,7 +20,7 @@ class Profile extends StatelessWidget {
           SizedBox(
             width: 10,
           ),
-          Text(user.firstName+" "+user.lastName)
+          Text(user.firstName! + " " + user.lastName!)
         ],
       ),
     );

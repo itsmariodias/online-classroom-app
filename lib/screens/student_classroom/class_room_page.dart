@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:online_classroom/data/custom_user.dart';
 import 'package:online_classroom/screens/student_classroom/people_tab.dart';
+import 'package:provider/provider.dart';
 
 import '../student_classroom/classwork_tab.dart';
 import '../student_classroom/stream_tab.dart';
@@ -26,8 +28,10 @@ class _ClassRoomPageState extends State<ClassRoomPage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<CustomUser?>(context);
     String className = widget.classRoom.className;
     Color uiColor = widget.uiColor;
+
     final tabs = [
       StreamTab(
         className: className,

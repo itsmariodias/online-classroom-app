@@ -10,7 +10,7 @@ void _launchURL(url) async =>
 
 
 class AttachmentComposer extends StatefulWidget {
-  List<Attachment> attachmentList;
+  List attachmentList;
 
   AttachmentComposer(this.attachmentList);
 

@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables
 
+import 'package:online_classroom/screens/Authenticate/userform.dart';
+import 'package:online_classroom/screens/loading.dart';
 import 'package:online_classroom/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:online_classroom/services/updatealldata.dart';
 
 class Register extends StatefulWidget {
   final Function toggle_reg_log;
@@ -20,14 +23,16 @@ class _RegisterState extends State<Register> {
   String email = '';
   String password = '';
   String error = '';
-  String name = "";
 
   // for form validation
   final _formKey = GlobalKey<FormState>();
 
+  // for loading screen
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
         // appbar part
         appBar: AppBar(
           title: Text("Register",
@@ -59,19 +64,6 @@ class _RegisterState extends State<Register> {
                 padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
                 child: Column(
                   children: [
-                    SizedBox(height: 20.0),
-
-                    // textbox for name
-                    TextFormField(
-                      decoration: InputDecoration(labelText: "Name", border: OutlineInputBorder()),
-                      validator: (val) => val!.isEmpty ? 'Enter an Name' : null,
-                      onChanged: (val) {
-                        setState(() {
-                          name = val;
-                        });
-                      },
-                    ),
-
                     SizedBox(height: 20.0),
 
                     // textbox for email
@@ -112,16 +104,24 @@ class _RegisterState extends State<Register> {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
+
+                          setState(() => loading = true);
+
                           // Registering new student
-                          var result =
-                              await _auth.registerStudent(email, password, name);
+                          var result = await _auth.registerStudent(email, password);
                           if (result == null) {
                             setState(() {
-                              error =
-                                  'Some error in Registering! Please check again';
+                              loading = false;
+                              error = 'Some error in Registering! Please check again';
                             });
-                          } else
-                            print("\t\t\tNew User Registered");
+                          }
+
+                          else {
+                            await updateAllData();
+
+                            setState(() => loading = false);
+                            Navigator.pushReplacement(context, MaterialPageRoute( builder: (context) => Userform()));
+                          }
                         }
                       },
                       style: ElevatedButton.styleFrom(

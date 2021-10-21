@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:online_classroom/data/accounts.dart';
 import 'package:online_classroom/data/classrooms.dart';
 import 'package:online_classroom/screens/teacher_classroom/class_room_page.dart';
 
 class ClassesTab extends StatefulWidget {
-  final String? classTeacher;
+  final Account? classTeacher;
 
   ClassesTab(this.classTeacher);
 
@@ -15,7 +16,7 @@ class _ClassesTabState extends State<ClassesTab> {
 
   @override
   Widget build(BuildContext context) {
-    List<ClassRooms> _classRoomList = classRoomList.where((i) => i.creator.firstName == widget.classTeacher).toList();
+    List _classRoomList = classRoomList.where((i) => i.creator == widget.classTeacher).toList();
 
     return ListView.builder(
         itemCount: _classRoomList.length,
@@ -64,7 +65,7 @@ class _ClassesTabState extends State<ClassesTab> {
                 Container(
                   margin: EdgeInsets.only(top: 80, left: 30),
                   child: Text(
-                    _classRoomList[index].creator.firstName + " " + _classRoomList[index].creator.lastName,
+                    _classRoomList[index].creator.firstName! + " " + _classRoomList[index].creator.lastName!,
                     style: TextStyle(
                         fontSize: 12,
                         color: Colors.white54,

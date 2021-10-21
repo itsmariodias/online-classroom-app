@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:online_classroom/data/accounts.dart';
 import 'package:online_classroom/data/classrooms.dart';
+import 'package:online_classroom/data/custom_user.dart';
 import 'package:online_classroom/widgets/profile_tile.dart';
 import 'package:online_classroom/data/submissions.dart';
 import 'package:online_classroom/screens/teacher_classroom/submission_page.dart';
+import 'package:provider/provider.dart';
 
 class StudentWorkPage extends StatefulWidget {
   Account student;
@@ -19,8 +21,9 @@ class _StudentWorkPageState extends State<StudentWorkPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Submission> assignedWork = submissionList.where((i) => i.user == widget.student && i.classroom == widget.classRoom && !i.submitted).toList();
-    List<Submission> submittedWork = submissionList.where((i) => i.user == widget.student && i.classroom == widget.classRoom && i.submitted).toList();
+
+    List assignedWork = submissionList.where((i) => i.user == widget.student && i.classroom == widget.classRoom && !i.submitted).toList();
+    List submittedWork = submissionList.where((i) => i.user == widget.student && i.classroom == widget.classRoom && i.submitted).toList();
 
     return Scaffold(
         appBar: AppBar(

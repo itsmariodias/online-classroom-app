@@ -15,7 +15,7 @@ class CommentComposer extends StatefulWidget {
 class _CommentComposerState extends State<CommentComposer> {
   @override
   Widget build(BuildContext context) {
-    List<Announcement> _announcementList = announcementList.where((i) => i.classroom.className == widget.className).toList();
+    List _announcementList = announcementList.where((i) => i.classroom.className == widget.className).toList();
 
     return Container(
         child: ListView.builder(

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:online_classroom/data/announcements.dart';
+import 'package:online_classroom/data/custom_user.dart';
 import 'package:online_classroom/data/submissions.dart';
 import 'package:online_classroom/data/classrooms.dart';
 import 'package:online_classroom/data/accounts.dart';
 import 'package:online_classroom/data/attachments.dart';
+import 'package:online_classroom/services/announcements_db.dart';
+import 'package:online_classroom/services/submissions_db.dart';
+import 'package:online_classroom/services/updatealldata.dart';
 import 'package:online_classroom/utils/datetime.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class AddAnnouncement extends StatefulWidget {
   ClassRooms classRoom;
@@ -18,13 +23,13 @@ class AddAnnouncement extends StatefulWidget {
 }
 
 class _AddAnnouncementState extends State<AddAnnouncement> {
-  Account user = accountList[3];
+
   String title = '';
   String description = '';
   String type = 'Notice';
   String dateTime = todayDate();
   String dueDate = todayDate();
-  List<Attachment> attachments = [];
+  List attachments = [];
 
   // for form validation
   final _formKey = GlobalKey<FormState>();
@@ -32,6 +37,9 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
   // build func
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<CustomUser?>(context);
+
+
     return Scaffold(
       // appbar part
         appBar: AppBar(
@@ -138,30 +146,18 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
                         color: Colors.white, fontFamily: "Roboto",
                             fontSize: 22)
                     ),
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Announcement newAnnouncement = Announcement(
-                            user: user,
-                            dateTime: dateTime,
-                            dueDate: dueDate,
-                            type: type,
-                            title: title,
-                            description: description,
-                            classroom: widget.classRoom,
-                            attachments: attachments
-                        );
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate())  {
 
-                        announcementList.insert(0, newAnnouncement);
-                        notificationList.insert(0, newAnnouncement);
+                        await AnnouncementDB(user: user).addAnnouncements(title, type, description, widget.classRoom.className, dateTime, dueDate);
 
                         if(type == 'Assignment') {
                           for (int index = 0; index < widget.classRoom.students.length; index++) {
-                            submissionList.add(new Submission(
-                                  user: widget.classRoom.students[index],
-                                  classroom: widget.classRoom,
-                                  assignment: newAnnouncement));
+                            await SubmissionDB().addSubmissions(widget.classRoom.students[index].uid, widget.classRoom.className, widget.classRoom.className+"__"+title);
                           }
                         }
+                        await updateAllData();
+
                         Navigator.of(context).pop();
                       }
                     },

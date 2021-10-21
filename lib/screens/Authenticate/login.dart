@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, non_constant_identifier_names
 
+import 'package:online_classroom/screens/loading.dart';
 import 'package:online_classroom/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:online_classroom/services/updatealldata.dart';
 
 class Login extends StatefulWidget {
   final Function toggle_reg_log;
@@ -24,10 +26,15 @@ class _LoginState extends State<Login> {
   // for form validation
   final _formKey = GlobalKey<FormState>();
 
+  // for loading screen
+  bool loading = false;
+
   // build func
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+
+    // checking if not loading then show the page
+    return loading ? Loading() :Scaffold(
         // appbar part
         appBar: AppBar(
           title: Text("Login",
@@ -92,20 +99,31 @@ class _LoginState extends State<Login> {
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
+
+                        setState(() => loading = true);
+
+                        await updateAllData();
+
                         // Logging into the account
                         var result = await _auth.loginStudent(email, password);
+
                         if (result == null) {
                           setState(() {
-                            error =
-                                'Some error in logging in! Please check again';
+                            loading = false;
+                            error = 'Some error in logging in! Please check again';
                           });
-                        } else
+
+
+                        }
+                        else {
                           print("\t\t\tUser Logged in Successfully");
+
+                          setState(() => loading = false);
+                        }
                       }
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.blue,
-                      minimumSize: Size(150, 50),
                     ),
                   ),
 

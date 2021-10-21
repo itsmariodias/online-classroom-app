@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:online_classroom/data/announcements.dart';
+import 'package:online_classroom/data/custom_user.dart';
 import 'package:online_classroom/data/submissions.dart';
 import 'package:online_classroom/data/attachments.dart';
+import 'package:online_classroom/services/announcements_db.dart';
+import 'package:online_classroom/services/submissions_db.dart';
+import 'package:online_classroom/services/updatealldata.dart';
 import 'package:online_classroom/utils/datetime.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class EditAnnouncement extends StatefulWidget {
   Announcement announcement;
@@ -20,7 +25,7 @@ class _EditAnnouncementState extends State<EditAnnouncement> {
   String description = '';
   String dateTime = todayDate();
   String dueDate = todayDate();
-  List<Attachment> attachments = [];
+  List attachments = [];
   bool firstTime = true;
 
   // for form validation
@@ -29,6 +34,8 @@ class _EditAnnouncementState extends State<EditAnnouncement> {
   // build func
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<CustomUser?>(context);
+
     if(firstTime) {
       title = widget.announcement.title;
       description = widget.announcement.description;
@@ -130,28 +137,23 @@ class _EditAnnouncementState extends State<EditAnnouncement> {
                         color: Colors.white, fontFamily: "Roboto",
                             fontSize: 22)
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        announcementList.remove(widget.announcement);
-                        notificationList.remove(widget.announcement);
+                        await AnnouncementDB(user: user).updateAnnouncements(title, description, widget.announcement.classroom.className, dateTime, dueDate);
 
-                        widget.announcement.dateTime = dateTime;
-                        widget.announcement.dueDate = dueDate;
-                        widget.announcement.title = title;
-                        widget.announcement.description = description;
-                        widget.announcement.attachments = attachments;
-
-                        announcementList.insert(0, widget.announcement);
-                        notificationList.insert(0, widget.announcement);
                         if(widget.announcement.type == 'Assignment') {
                           for (int index = 0; index <
                               submissionList.length; index++) {
                             if (submissionList[index].assignment ==
                                     widget.announcement) {
-                              submissionList[index].submitted = false;
+                              await SubmissionDB().updateSubmissions(
+                                  widget.announcement.classroom.students[index].uid,
+                                  widget.announcement.classroom.className,
+                                  widget.announcement.classroom.className+"__"+title);
                             }
                           }
                         }
+                        await updateAllData();
                         Navigator.of(context).pop();
                       }
                     },

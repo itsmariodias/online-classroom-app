@@ -14,7 +14,7 @@ class ClassWork extends StatefulWidget {
 class _ClassWorkState extends State<ClassWork> {
   @override
   Widget build(BuildContext context) {
-    List<Announcement> _classWorkList = announcementList.where((i) => i.type == "Assignment" && i.classroom.className == widget.className).toList();
+    List _classWorkList = announcementList.where((i) => i.type == "Assignment" && i.classroom.className == widget.className).toList();
 
     return ListView.builder(
         itemCount: _classWorkList.length,
@@ -50,7 +50,7 @@ class _ClassWorkState extends State<ClassWork> {
                             style: TextStyle(letterSpacing: 1),
                           ),
                           Text(
-                            "Due " + _classWorkList[index].dateTime,
+                            "Due " + _classWorkList[index].dueDate,
                             style: TextStyle(color: Colors.grey),
                           ),
                         ],

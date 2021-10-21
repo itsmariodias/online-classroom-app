@@ -54,7 +54,7 @@ class _SubmissionPageState extends State<SubmissionPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      widget.submission.user.firstName + " " + widget.submission.user.lastName,
+                                      widget.submission.user.firstName! + " " + widget.submission.user.lastName!,
                                       style: TextStyle(),
                                     ),
                                     Text(

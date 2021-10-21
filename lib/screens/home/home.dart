@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:online_classroom/models/custom_user.dart';
+import 'package:online_classroom/data/custom_user.dart';
 import 'package:online_classroom/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,8 +33,7 @@ class ClassRoomState extends State<ClassRoom> {
               child: Text("Logout"),
             ),
             SizedBox(height: 12.0),
-            Text("Name : ${user!.name}"),
-            Text("Email: ${user.email}"),
+            Text("Email: ${user!.email}"),
             Text("uid : ${user.uid}"),
           ],
         )));

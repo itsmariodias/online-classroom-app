@@ -19,8 +19,8 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
 
   List<Widget> buildSubmissions() {
     if(widget.announcement.type == 'Assignment') {
-      List<Submission> submissionsAssigned = submissionList.where((i) => i.assignment == widget.announcement && !i.submitted).toList();
-      List<Submission> submissionsDone = submissionList.where((i) => i.assignment == widget.announcement && i.submitted).toList();
+      List submissionsAssigned = submissionList.where((i) => i.assignment == widget.announcement && !i.submitted).toList();
+      List submissionsDone = submissionList.where((i) => i.assignment == widget.announcement && i.submitted).toList();
       return [
         if(submissionsDone.length > 0) Container(
           padding: EdgeInsets.only(top: 15, left: 15, bottom: 10),
@@ -195,7 +195,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    widget.announcement.user.firstName + " " + widget.announcement.user.lastName,
+                                    widget.announcement.user.firstName! + " " + widget.announcement.user.lastName!,
                                     style: TextStyle(),
                                   ),
                                   Text(
@@ -239,7 +239,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                 Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => EditAnnouncement(announcement: widget.announcement),
-                    )).then((_) => setState(() {}));
+                    )).then((_) => setState(() {widget.announcement = getAnnouncement(widget.announcement.classroom.className+"__"+widget.announcement.title)!;}));
               },
               backgroundColor: widget.announcement.classroom.uiColor,
               child: Icon(
