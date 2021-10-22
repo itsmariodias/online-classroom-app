@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
+import 'package:online_classroom/data/announcements.dart';
 import 'package:online_classroom/data/custom_user.dart';
 import 'package:online_classroom/services/classes_db.dart';
+import 'package:online_classroom/services/submissions_db.dart';
 import 'package:online_classroom/services/updatealldata.dart';
 import 'package:provider/provider.dart';
 
@@ -77,6 +79,13 @@ class _AddClassState extends State<AddClass> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate())  {
                           await ClassesDB(user: user).updateStudentClasses(className);
+
+                          for(int i=0; i<announcementList.length; i++) {
+                            if(announcementList[i].classroom.className == className && announcementList[i].type == "Assignment") {
+                              await SubmissionDB().addSubmissions(user!.uid, className, announcementList[i].title);
+                            }
+                          }
+
                           await updateAllData();
 
                           Navigator.of(context).pop();

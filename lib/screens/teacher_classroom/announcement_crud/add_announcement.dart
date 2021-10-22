@@ -240,7 +240,6 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
 
                         if(type == 'Assignment') {
                           for (int index = 0; index < widget.classRoom.students.length; index++) {
-                            print(title);
                             await SubmissionDB().addSubmissions(widget.classRoom.students[index].uid, widget.classRoom.className, title);
                           }
                         }

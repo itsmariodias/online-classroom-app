@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:online_classroom/data/accounts.dart';
 import 'package:online_classroom/data/announcements.dart';
+import 'package:online_classroom/data/custom_user.dart';
 import 'package:online_classroom/screens/student_classroom/announcement_page.dart';
+import 'package:provider/provider.dart';
 
 class TimelineTab extends StatefulWidget {
   @override
@@ -8,10 +11,14 @@ class TimelineTab extends StatefulWidget {
 }
 
 class _TimelineTabState extends State<TimelineTab> {
-  List classWorkList = announcementList.where((i) => i.type == "Assignment").toList();
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<CustomUser?>(context);
+    var account = getAccount(user!.uid);
+
+    List classWorkList = announcementList.where((i) => i.type == "Assignment" && i.classroom.students.contains(account)).toList();
+
     return ListView.builder(
         itemCount: classWorkList.length,
         itemBuilder: (context, int index) {

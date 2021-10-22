@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:online_classroom/data/accounts.dart';
 import 'package:online_classroom/data/announcements.dart';
+import 'package:online_classroom/data/custom_user.dart';
 import 'package:online_classroom/screens/teacher_classroom/announcement_page.dart';
+import 'package:provider/provider.dart';
 
 class ClassWork extends StatefulWidget {
   final String className;
@@ -14,6 +17,8 @@ class ClassWork extends StatefulWidget {
 class _ClassWorkState extends State<ClassWork> {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<CustomUser?>(context);
+
     List _classWorkList = announcementList.where((i) => i.type == "Assignment" && i.classroom.className == widget.className).toList();
 
     return ListView.builder(
