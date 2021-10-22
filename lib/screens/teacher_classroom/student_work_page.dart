@@ -21,9 +21,8 @@ class _StudentWorkPageState extends State<StudentWorkPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    List assignedWork = submissionList.where((i) => i.user == widget.student && i.classroom == widget.classRoom && !i.submitted).toList();
-    List submittedWork = submissionList.where((i) => i.user == widget.student && i.classroom == widget.classRoom && i.submitted).toList();
+    List assignedWork = submissionList.where((i) => i.user.uid == widget.student.uid && i.classroom.className == widget.classRoom.className && !i.submitted).toList();
+    List submittedWork = submissionList.where((i) => i.user.uid == widget.student.uid && i.classroom.className == widget.classRoom.className && i.submitted).toList();
 
     return Scaffold(
         appBar: AppBar(
@@ -34,20 +33,6 @@ class _StudentWorkPageState extends State<StudentWorkPage> {
             style: TextStyle(
                 color: Colors.white, fontFamily: "Roboto", fontSize: 22),
           ),
-          leading: Icon(
-            Icons.menu,
-            color: Colors.white,
-          ),
-          actions: [
-            IconButton(
-              icon: Icon(
-                Icons.more_vert,
-                color: Colors.white,
-                size: 26,
-              ),
-              onPressed: () {},
-            )
-          ],
         ),
         body: ListView(
             children: [

@@ -7,10 +7,8 @@ class Attachment {
   String name;
   String url;
   String type;
-  IconData icon;
-  Color color;
 
-  Attachment({required this.name, required this.url, required this.type, required this.icon, required this.color});
+  Attachment({required this.name, required this.url, required this.type});
 }
 
 
@@ -50,8 +48,6 @@ Future<bool> getAttachmentList() async {
         name: data["name"],
         url: data["url"],
         type: data["type"],
-        icon: Icons.picture_as_pdf,
-        color: Colors.red,
       )
     );
   });
@@ -93,7 +89,7 @@ Future<bool> getAttachmentStudentsList() async {
   jsonList.forEach((element) {
     var data = element.data();
     attachmentStudentsList.add(
-      AttachmentStudents(uid: data["uid"], url: data["url"], submission: data["announcement"],)
+      AttachmentStudents(uid: data["uid"], url: data["url"], submission: data["submission"],)
     );
   });
 
@@ -106,6 +102,7 @@ Future<bool> getAttachmentStudentsList() async {
 // finding a Attachment using url
 Attachment? getAttachment(url) {
   var data = attachmentList.firstWhere((element) => element.url == url, orElse: () => null);
+
   return data;
 }
 
@@ -121,12 +118,10 @@ List getAttachmentListForAnnouncement(title) {
 
 
 // makes list of Attachment only for a specific Student
-List getAttachmentListForStudent(uid, submission) {
-  List list1 = attachmentStudentsList.where((element) => element.uid == uid).toList();
-  List list2 = list1.where((element) => element.submission == submission).toList();
-
+List getAttachmentListForStudent(uid, classname, submission) {
+  List list1 = attachmentStudentsList.where((element) => element.uid == uid && element.submission == classname+"__"+submission).toList();
   List required = [];
-  list2.forEach((element) {
+  list1.forEach((element) {
     required.add(getAttachment(element.url)!);
   });
   return required;

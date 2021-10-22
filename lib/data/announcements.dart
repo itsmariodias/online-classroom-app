@@ -34,7 +34,7 @@ Future<bool> getAnnouncementList() async {
   jsonList.forEach((element) {
     
     var data = element.data();
-    announcementList.add(
+    announcementList.insert(0,
       Announcement(
         title: data["title"],
         dateTime: data["dateTime"],
@@ -44,20 +44,18 @@ Future<bool> getAnnouncementList() async {
         attachments: getAttachmentListForAnnouncement(data["title"]),
         user: getAccount(data["uid"])!,
         classroom: getClassroom(data["className"])!,
-        
       )
     );
   });
 
   print("\t\t\t\tGot Announcements list");
-  print(announcementList);
   return true;
   
 }
 
 
-Announcement? getAnnouncement(name) {
-  var data = announcementList.firstWhere((element) => element.classroom.className+"__"+element.title == name, orElse: () => null);
+Announcement? getAnnouncement(className, assignment) {
+  var data = announcementList.firstWhere((element) => element.classroom.className == className && element.title == assignment, orElse: () => null);
   return data;
 }
 

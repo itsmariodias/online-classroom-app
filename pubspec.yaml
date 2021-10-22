@@ -36,8 +36,11 @@ dependencies:
   intl: ^0.17.0
   datetime_picker_formfield: ^2.0.0
   cloud_firestore: ^2.5.3
+  firebase_storage: ^8.0.3
+  file_picker: ^3.0.1
   flutter_spinkit: ^5.1.0
   flutter_material_color_picker: ^1.1.0+2
+  mime: ^1.0.1
 
 dev_dependencies:
   flutter_test:

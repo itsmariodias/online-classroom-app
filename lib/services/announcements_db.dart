@@ -35,6 +35,10 @@ class AnnouncementDB {
     });
   }
 
+  Future<void> deleteAnnouncements(String title, String className) async {
+    return await announcementReference.doc(className+"__"+title).delete();
+  }
+
 
   // function to make list of announcements from DB
   Future<List?> createAnnouncementListDB() async {

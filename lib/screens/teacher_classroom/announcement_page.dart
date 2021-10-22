@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:online_classroom/data/announcements.dart';
+import 'package:online_classroom/data/custom_user.dart';
+import 'package:online_classroom/services/announcements_db.dart';
+import 'package:online_classroom/services/attachments_db.dart';
+import 'package:online_classroom/services/submissions_db.dart';
+import 'package:online_classroom/services/updatealldata.dart';
 import 'package:online_classroom/widgets/profile_tile.dart';
 import 'package:online_classroom/data/submissions.dart';
 import 'package:online_classroom/widgets/attachment_composer.dart';
 import 'package:online_classroom/screens/teacher_classroom/submission_page.dart';
 import 'package:online_classroom/screens/teacher_classroom/announcement_crud/edit_announcement.dart';
+import 'package:provider/provider.dart';
 
 class AnnouncementPage extends StatefulWidget {
   Announcement announcement;
@@ -94,6 +100,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<CustomUser?>(context);
 
     Future<void> deleteAnnouncement() async {
       return showDialog<void>(
@@ -112,26 +119,33 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
             actions: <Widget>[
               TextButton(
                 child: Text('Delete', style: TextStyle(color: Colors.red)),
-                onPressed: () {
+                onPressed: () async {
                   print('Deleted');
 
-                  announcementList.remove(widget.announcement);
-                  notificationList.remove(widget.announcement);
+                  await AnnouncementDB(user: user).deleteAnnouncements(widget.announcement.title, widget.announcement.classroom.className);
+
+                  for(int i=0; i<widget.announcement.attachments.length; i++) {
+                    var attachment = widget.announcement.attachments[i];
+                    String safeURL = attachment.url.replaceAll(new RegExp(r'[^\w\s]+'),'');
+                    AttachmentsDB().deleteAttachmentsDB(attachment.name, safeURL);
+
+                    print("Deleted attachment");
+
+                    AttachmentsDB().deleteAttachAnnounceDB(widget.announcement.title, safeURL);
+                    print("Deleted reference to attachment on announcement");
+                  }
 
                   if(widget.announcement.type == 'Assignment') {
-                    List<Submission> deletedSubmissions = [];
+                    List students = widget.announcement.classroom.students;
                     for (int index = 0; index <
-                        submissionList.length; index++) {
-                      if (submissionList[index].assignment ==
-                              widget.announcement) {
-                        deletedSubmissions.add(submissionList[index]);
-                      }
-                    }
-                    for (int index = 0; index < deletedSubmissions.length; index++) {
-                      submissionList.remove(deletedSubmissions[index]);
+                        students.length; index++) {
+                      await SubmissionDB(user: user).deleteSubmissions(students[index].uid,
+                          widget.announcement.classroom.className,
+                          widget.announcement.classroom.className+"__"+widget.announcement.title);
                     }
                   }
 
+                  await updateAllData();
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
@@ -239,7 +253,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                 Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => EditAnnouncement(announcement: widget.announcement),
-                    )).then((_) => setState(() {widget.announcement = getAnnouncement(widget.announcement.classroom.className+"__"+widget.announcement.title)!;}));
+                    )).then((_) => setState(() {widget.announcement = getAnnouncement(widget.announcement.classroom.className, widget.announcement.title)!;}));
               },
               backgroundColor: widget.announcement.classroom.uiColor,
               child: Icon(

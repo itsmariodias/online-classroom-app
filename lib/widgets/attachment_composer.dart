@@ -53,8 +53,8 @@ class _AttachmentComposerState extends State<AttachmentComposer> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(30)),
                                 child: Icon(
-                                  widget.attachmentList[index].icon,
-                                  color: widget.attachmentList[index].color,
+                                  Icons.picture_as_pdf,
+                                  color: Colors.red,
                                   size: 30,
                                 ),
                               ),

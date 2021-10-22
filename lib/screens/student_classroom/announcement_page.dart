@@ -17,8 +17,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
           children: [
             Container(
               padding: EdgeInsets.only(top: 50, left: 15, bottom: 10),
@@ -97,7 +96,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                 )
             ) : Container(),
             AttachmentComposer(widget.announcement.attachments),
-            widget.announcement.type == "Assignment" ? SubmissionComposer(widget.announcement.classroom.uiColor) : Container()
+            widget.announcement.type == "Assignment" ? SubmissionComposer(widget.announcement, widget.announcement.classroom.uiColor) : Container()
             //Attachments(widget.announcement.attachments)
           ]
       )

@@ -1,6 +1,7 @@
 
 import 'package:online_classroom/data/custom_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:online_classroom/utils/datetime.dart';
 
 class SubmissionDB {
 
@@ -18,19 +19,23 @@ class SubmissionDB {
       'uid': uid,
       'classroom' : classroom,
       'assignment' : assignment,
-      'dateTime': DateTime.now().toString(),
+      'dateTime': todayDate(),
       'submitted': false,     
     });
   }
 
-  Future<void> updateSubmissions(String uid, String classroom, String assignment) async {
+  Future<void> updateSubmissions(String uid, String classroom, String assignment, bool submission) async {
     return await submissionReference.doc(uid+"_"+classroom+"_"+assignment).update({
       'uid': uid,
       'classroom' : classroom,
       'assignment' : assignment,
-      'dateTime': DateTime.now().toString(),
-      'submitted': false,
+      'dateTime': todayDate(),
+      'submitted': submission,
     });
+  }
+
+  Future<void> deleteSubmissions(String uid, String classroom, String assignment) async {
+    return await submissionReference.doc(uid+"_"+classroom+"_"+assignment).delete();
   }
 
 

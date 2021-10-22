@@ -33,10 +33,10 @@ Future<bool> getsubmissionList() async {
       Submission(
         user: getAccount(data["uid"])!,
         classroom: getClassroom(data["classroom"])!,
-        assignment: getAnnouncement(data["assignment"])!,
+        assignment: getAnnouncement(data["classroom"], data["assignment"])!,
         dateTime: data["dateTime"],
         submitted: data["submitted"],
-        attachments : getAttachmentListForStudent(data["uid"],data["assignment"])
+        attachments : getAttachmentListForStudent(data["uid"],data["classroom"],data["assignment"])
       )
     );
   });
