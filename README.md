@@ -1,6 +1,6 @@
-# online_classroom
+# Online Classroom Application using Flutter
 
-Online Classroom App
+An Online Classroom App developed using Flutter and Firebase.
 
 ## Getting Started
 
