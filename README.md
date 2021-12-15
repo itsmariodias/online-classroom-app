@@ -37,3 +37,9 @@ https://github.com/AbhilashTUofficial/GoogleClassRoom-Clone-Flutter
 https://github.com/ganeshkarki/classroom  
 https://github.com/ketanchoyal/Our-E-School  
 https://github.com/Bobleyl/flutterfire_firestore  
+
+## Screenshots:
+| <img src="screenshots/login_screen.png" width="250"> | <img src="screenshots/home_screen.png" width="250"> | <img src="screenshots/classwork.png" width="250"> |
+|------|-------|-------|
+| <img src="screenshots/people_tab.png" width="250"> | <img src="screenshots/add_class.png" width="250"> | <img src="screenshots/add_announcement.png" width="250"> |
+| <img src="screenshots/student_submissions.png" width="250"> | <img src="screenshots/assignment_tab.png" width="250"> | <img src="screenshots/assignment_submit.png" width="250"> |
