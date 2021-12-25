@@ -1,6 +1,5 @@
 # Online Classroom Application using Flutter
-
-An Online Classroom App developed made using Flutter and Firebase that allows teachers to better communicate with students by posting updates and assignments along with timeline and deadline notifications. Students can communicate with teachers directly and teachers will get info on student submissions. Updates posted by teachers will be visible on the notification wall for all students. User accounts will be implemented for both Teachers and Students.
+An Online Classroom App developed using Flutter and Firebase that allows teachers to better communicate with students by posting updates and assignments along with timeline and deadline notifications. Students can join their respective classes and submit assignments directly and teachers will get information on all student submissions. Updates posted by teachers will be visible on the notification wall for all students. Both teachers and students have user accounts to store information regarding subjects, assignments and submissions. Teachers can also get a clear overview on the work done by each individual student and also regarding each assignment published.
 
 ### Requirements :
 ```
